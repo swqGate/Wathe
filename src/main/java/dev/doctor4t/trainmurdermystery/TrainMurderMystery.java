@@ -40,13 +40,11 @@ public class TrainMurderMystery implements ModInitializer {
         // Game loop tick
         ServerTickEvents.START_WORLD_TICK.register(GameLoop::tick);
     }
+}
 
 // TODO: Add tasks
 // TODO: Add temp jamming doors with lockpick
 // TODO: Remove survival UI
-// TODO: Lock brightness option + render distance
 // TODO: Add snack cabinet
 // TODO: Add drink cabinet
-// TODO: Make beds poisonable
-// TODO: Make cabinets poisonable
-}
+// TODO: Add instinct
