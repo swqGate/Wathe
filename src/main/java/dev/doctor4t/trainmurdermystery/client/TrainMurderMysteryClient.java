@@ -32,6 +32,7 @@ import net.minecraft.client.render.entity.EmptyEntityRenderer;
 import net.minecraft.client.render.model.UnbakedModel;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.ModelIdentifier;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
@@ -270,5 +271,12 @@ public class TrainMurderMysteryClient implements ClientModInitializer {
 
     public static List<UUID> getTargets() {
         return GAME_COMPONENT.getTargets();
+    }
+
+    public static boolean shouldInstinctHighlight(Entity entityToHighlight) {
+        return isInstinctEnabled() && entityToHighlight instanceof PlayerEntity player && TrainMurderMystery.shouldRestrictPlayerOptions(player);
+    }
+    public static boolean isInstinctEnabled() {
+        return TrainMurderMysteryClient.instinctKeybind.isPressed() && TrainMurderMysteryClient.isHitman() && TrainMurderMysteryClient.shouldRestrictPlayerOptions();
     }
 }

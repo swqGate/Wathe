@@ -2,6 +2,7 @@ package dev.doctor4t.trainmurdermystery.mixin.client.restrictions;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import dev.doctor4t.trainmurdermystery.client.TrainMurderMysteryClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
@@ -13,6 +14,8 @@ import org.spongepowered.asm.mixin.Mixin;
 public class PlayerEntityRendererMixin {
     @WrapMethod(method = "renderLabelIfPresent(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/text/Text;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IF)V")
     protected void tmm$disableNameTags(AbstractClientPlayerEntity abstractClientPlayerEntity, Text text, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, float f, Operation<Void> original) {
-
+        if (TrainMurderMysteryClient.isInstinctEnabled()) {
+            original.call(abstractClientPlayerEntity, text, matrixStack, vertexConsumerProvider, i, f);
+        }
     }
 }
