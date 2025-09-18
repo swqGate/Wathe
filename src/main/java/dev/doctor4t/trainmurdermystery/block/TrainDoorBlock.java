@@ -1,6 +1,7 @@
 package dev.doctor4t.trainmurdermystery.block;
 
 import dev.doctor4t.trainmurdermystery.block_entity.SmallDoorBlockEntity;
+import dev.doctor4t.trainmurdermystery.cca.TMMComponents;
 import dev.doctor4t.trainmurdermystery.game.TMMGameLoop;
 import dev.doctor4t.trainmurdermystery.index.TMMItems;
 import dev.doctor4t.trainmurdermystery.index.TMMSounds;
@@ -30,7 +31,7 @@ public class TrainDoorBlock extends SmallDoorBlock {
                 return ActionResult.PASS;
             }
 
-            if (player.isCreative() || TMMGameLoop.trainComponent.getTrainSpeed() == 0) {
+            if (player.isCreative() || TMMComponents.TRAIN.get(world).getTrainSpeed() == 0) {
                 return open(state, world, entity, lowerPos);
             } else {
                 if (player.getMainHandStack().isOf(TMMItems.REVOLVER)) {
