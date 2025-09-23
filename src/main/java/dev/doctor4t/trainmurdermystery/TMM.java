@@ -51,28 +51,45 @@ public class TMM implements ModInitializer {
     }
 }
 
-// TODO: Fix sounds for showers and lights
-// TODO: System that remembers previous roles and allows cycling of roles
-// TODO: Train chimney smoke + ringable horn, triggers game start in lobby
-// TODO: Fix spectators being shot by guns
+// TORECORD: Fixing the mood system
 // TODO: Better tasks: mood goes down gradually, completing tasks is a single action to bring it back up
-// TODO: - Get a snack from restaurant task (need food platter block + custom food item)
-// TODO: - Get a drink from the bar task (need drinks platter block + custom drink item, whiskey glass?)
-// TODO: - Up sleep chances and make it a sleep 10s task
+//  (new task system is more meant to make players vulnerable to the hitman in a different way from splitting them up)
+// TODO: - Get a snack from restaurant task (food platter block + food items)
+// TODO: - Get a drink from the bar task (drink tray block + custom drink items)
+// TODO: - Sleeping task requiring you to sleep for 10s
 // TODO: - Get some fresh air reduced to going walking outside for 10s
+// TODO: - Change mood down effect from speed to something else (to prevent players being able to innocent each other on an easily observable change)
+
+// TORECORD: Fixing the hitman
 // TODO: Remove target system and make the win condition a kill count
-// TODO: Cabin button from inside
-// TODO: Remove revolver bullet count
-// TODO: Detective drops gun on innocent kill
-// TODO: Make the detective drop the gun on killed
-// TODO: Players collide with each other
-// TODO: Louder footsteps
 // TODO: Hitman item shop
-// TODO: - Explosive for clumped up people
-// TODO: - Poison
-// TODO: - Scorpion
-// TODO: - Gun with one bullet
-// TODO: - Psycho mode
-// TODO: - Light turn off item + true darkness
-// TODO: - Crowbar
-// TODO: - Firecracker
+// TORECORD: Fixing the knife (now with a kill indicator, also show new name system to allow anyone to know player's names)
+// TORECORD: New name system shows who else is the hitman allowing them to scheme together
+// TODO: - Explosive for clumped up people (foils the grouping up cheese)
+// TODO: - Poison (poisons the next food or drink item)
+// TODO: - Scorpion (poisons the next person sleeping in the bed)
+// TODO: - Gun with one bullet (allows the hitman to potentially pass as a detective / passenger with a gun on top of giving a ranged option)
+// TODO: - Psycho mode (wanted to have an anonymous killer originally for the horror element, this also allows the hitman to go crazy how some wanted to)
+// TODO: - Light turn off item + true darkness (increases the horror aspect + amazing scenario of lights turning off and someone being dead when they turn back on)
+// TODO: - Crowbar (perma opening a door should be a hitman ability, allows for creative kills where you can push off players from train doors, as well as allowing passengers to use the exterior in order to give plausible deniability to hitmen using it to relocate)
+// TODO: - Firecracker (luring people, shooting the gun in spectator often led to people rushing in from curiosity, allowing the hitman to manipulate players)
+// TODO: - Note (allows the hitman to leave messages, fun for encouraging the roleplay aspect)
+
+// TORECORD: Fixing the detective
+// TODO: Remove revolver bullet count but make detectives drop the gun on innocent kill (to prevent detectives gunning down people and giving more weight to the choice as well as offer a chance to other players to make decisions)
+// TODO: Make the detective drop the gun on killed (that the hitman cannot pick up, to prevent soft locking)
+
+// TORECORD: Fixing the map
+// TODO: Rearrange the train cars to prevent all POIs being separated by all the sleeping cars
+
+// TORECORD: Adding a system to favour players for roles
+// TODO: System that remembers previous roles and allows cycling of roles (Amy)
+
+// Various tweaks who don't need to be recorded
+// TODO: Cabin buttons to open cabins from inside
+// TODO: Fix spectators being shot by guns (Amy)
+
+// TORECORD: Polish
+// TODO: Train chimney smoke + ringable horn, triggers game start in lobby and end of game
+// TODO: Players collide with each other (Amy)
+// TODO: Louder footsteps
