@@ -24,10 +24,12 @@ public class PlayerPsychoComponent implements AutoSyncedComponent, ServerTicking
 
     private final PlayerEntity player;
     public int psychoTicks = 0;
+
     public void setPsychoTicks(int ticks) {
         this.psychoTicks = ticks;
         this.sync();
     }
+
     public int getPsychoTicks() {
         return this.psychoTicks;
     }
@@ -68,15 +70,16 @@ public class PlayerPsychoComponent implements AutoSyncedComponent, ServerTicking
             }
 
             if (--this.psychoTicks == 0) {
+                player.sendMessage(Text.translatable("game.psycho_mode.over").withColor(Colors.RED), true);
                 stopPsycho();
             }
+
             this.sync();
         }
     }
 
     public void stopPsycho() {
         this.psychoTicks = 0;
-        player.sendMessage(Text.translatable("game.psycho_mode.over").withColor(Colors.RED), true);
         this.player.getInventory().remove(itemStack -> itemStack.isOf(TMMItems.BAT), Integer.MAX_VALUE, this.player.playerScreenHandler.getCraftingInput());
     }
 

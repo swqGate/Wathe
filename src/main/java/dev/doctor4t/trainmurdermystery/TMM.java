@@ -95,6 +95,7 @@ public class TMM implements ModInitializer {
 // TORECORD: Remove target system and make the win condition a kill count, turning him into a psycho
 // TORECORD: New name display system to allow anyone to know player's names, displays "psycho cohort" for other psychos, and instinct now shows other psychos instead of targets, game recognizes game
 // TORECORD: Hitman item shop
+// TODO: Change currency, don't want dollars cause european train, but euros are too modern for it, so make custom currency icon
 // TORECORD: Fixing the knife (now with a kill indicator)
 // TORECORD: New name system shows who else is the hitman allowing them to scheme together
 // TODO: - Explosive for clumped up people (foils the grouping up cheese)
@@ -121,7 +122,6 @@ public class TMM implements ModInitializer {
 
 // Various tweaks who don't need to be recorded
 // TODO: Fix spectators being shot by guns (Amy)
-// TODO: Prevent item drops from inside inventory
 
 // TORECORD: Polish
 // TODO: Train chimney smoke + ringable horn, triggers game start in lobby and end of game
