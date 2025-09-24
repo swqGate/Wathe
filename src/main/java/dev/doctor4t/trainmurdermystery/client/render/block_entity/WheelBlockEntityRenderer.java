@@ -1,11 +1,8 @@
 package dev.doctor4t.trainmurdermystery.client.render.block_entity;
 
-import dev.doctor4t.trainmurdermystery.block_entity.SmallDoorBlockEntity;
 import dev.doctor4t.trainmurdermystery.block_entity.WheelBlockEntity;
 import dev.doctor4t.trainmurdermystery.client.TMMClient;
-import dev.doctor4t.trainmurdermystery.client.animation.SmallDoorAnimations;
-import dev.doctor4t.trainmurdermystery.client.model.TrainMurderMysteryEntityModelLayers;
-import net.minecraft.client.MinecraftClient;
+import dev.doctor4t.trainmurdermystery.client.model.TMMModelLayers;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
@@ -21,7 +18,7 @@ public class WheelBlockEntityRenderer extends AnimatableBlockEntityRenderer<Whee
 
     public WheelBlockEntityRenderer(Identifier texture, BlockEntityRendererFactory.Context ctx) {
         this.texture = texture;
-        this.part = ctx.getLayerModelPart(TrainMurderMysteryEntityModelLayers.WHEEL);
+        this.part = ctx.getLayerModelPart(TMMModelLayers.WHEEL);
     }
 
     public static TexturedModelData getTexturedModelData() {

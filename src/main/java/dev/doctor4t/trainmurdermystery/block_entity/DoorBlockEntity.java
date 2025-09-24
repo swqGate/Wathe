@@ -2,7 +2,7 @@ package dev.doctor4t.trainmurdermystery.block_entity;
 
 import dev.doctor4t.trainmurdermystery.block.DoorPartBlock;
 import dev.doctor4t.trainmurdermystery.block.SmallDoorBlock;
-import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
+import dev.doctor4t.trainmurdermystery.game.GameConstants;
 import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
@@ -70,7 +70,7 @@ public abstract class DoorBlockEntity extends SyncingBlockEntity {
             this.lastUpdate = this.world.getTime();
             this.open = !this.open;
             this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, this.open ? 1 : 0);
-            this.closeCountdown = this.open ? TMMGameConstants.DOOR_AUTOCLOSE_TIME : 0;
+            this.closeCountdown = this.open ? GameConstants.DOOR_AUTOCLOSE_TIME : 0;
         }
     }
 
@@ -154,7 +154,7 @@ public abstract class DoorBlockEntity extends SyncingBlockEntity {
     }
 
     public void jam() {
-        this.setJammed(TMMGameConstants.JAMMED_DOOR_TIME);
+        this.setJammed(GameConstants.JAMMED_DOOR_TIME);
         if (this.open) {
             this.toggle(false);
         }

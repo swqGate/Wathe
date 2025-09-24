@@ -107,7 +107,7 @@ public class TMM implements ModInitializer {
 // TORECORD: Fixing the detective
 // TODO: Remove revolver bullet count but make detectives drop the gun on innocent kill (to prevent detectives gunning down people and giving more weight to the choice as well as offer a chance to other players to make decisions)
 // TODO: Make the detective drop the gun on killed (that the hitman cannot pick up, to prevent soft locking)
-// TODO: Remove body bags so make player corpses turn into skeletons after some time (since the detective role is no longer really a role and depends on who carries the gun, it's hard to keep the body bag item)
+// done: Remove body bags so make player corpses turn into skeletons after some time (since the detective role is no longer really a role and depends on who carries the gun, it's hard to keep the body bag item)
 
 // TORECORD: Fixing the map
 // TODO: Rearrange the train cars to prevent all POIs being separated by all the sleeping cars

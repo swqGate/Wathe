@@ -2,7 +2,7 @@ package dev.doctor4t.trainmurdermystery.item;
 
 import dev.doctor4t.trainmurdermystery.block.SmallDoorBlock;
 import dev.doctor4t.trainmurdermystery.block_entity.SmallDoorBlockEntity;
-import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
+import dev.doctor4t.trainmurdermystery.game.GameConstants;
 import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.DoubleBlockHalf;
@@ -32,7 +32,7 @@ public class LockpickItem extends Item {
                 if (player.isSneaking()) {
                     entity.jam();
 
-                    if (!player.isCreative()) player.getItemCooldownManager().set(this, TMMGameConstants.LOCKPICK_JAM_COOLDOWN);
+                    if (!player.isCreative()) player.getItemCooldownManager().set(this, GameConstants.LOCKPICK_JAM_COOLDOWN);
 
                     if (!world.isClient)
                         world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TMMSounds.ITEM_LOCKPICK_DOOR, SoundCategory.BLOCKS, 1f, 1f);

@@ -3,7 +3,7 @@ package dev.doctor4t.trainmurdermystery.client.gui.screen.ingame;
 import dev.doctor4t.trainmurdermystery.TMM;
 import dev.doctor4t.trainmurdermystery.cca.TMMComponents;
 import dev.doctor4t.trainmurdermystery.client.gui.StoreRenderer;
-import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
+import dev.doctor4t.trainmurdermystery.game.GameConstants;
 import dev.doctor4t.trainmurdermystery.util.ShopEntry;
 import dev.doctor4t.trainmurdermystery.util.StoreBuyPayload;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -29,7 +29,7 @@ public class LimitedInventoryScreen extends LimitedHandledScreen<PlayerScreenHan
     protected void init() {
         super.init();
         if (!TMMComponents.GAME.get(this.player.getWorld()).isHitman(this.player)) return;
-        var entries = TMMGameConstants.SHOP_ENTRIES;
+        var entries = GameConstants.SHOP_ENTRIES;
         var x = this.width / 2 - entries.size() * 36 / 2 + 9;
         var y = this.y - 46;
         for (var i = 0; i < entries.size(); i++) this.addDrawableChild(new StoreItemWidget(this, x + 36 * i, y, entries.get(i), i));

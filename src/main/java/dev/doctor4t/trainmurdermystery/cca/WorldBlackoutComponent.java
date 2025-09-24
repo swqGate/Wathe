@@ -1,7 +1,7 @@
 package dev.doctor4t.trainmurdermystery.cca;
 
 import dev.doctor4t.trainmurdermystery.TMM;
-import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
+import dev.doctor4t.trainmurdermystery.game.GameConstants;
 import dev.doctor4t.trainmurdermystery.index.TMMProperties;
 import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.nbt.NbtCompound;
@@ -53,7 +53,7 @@ public class WorldBlackoutComponent implements AutoSyncedComponent, ServerTickin
     }
 
     public boolean triggerBlackout() {
-        var area = TMMGameConstants.PLAY_AREA;
+        var area = GameConstants.PLAY_AREA;
         if (this.ticks > 0) return false;
         for (var x = (int) area.minX; x <= (int) area.maxX; x++) {
             for (var y = (int) area.minY; y <= (int) area.maxY; y++) {
@@ -61,7 +61,7 @@ public class WorldBlackoutComponent implements AutoSyncedComponent, ServerTickin
                     var pos = new BlockPos(x, y, z);
                     var state = this.world.getBlockState(pos);
                     if (!state.contains(Properties.LIT) || !state.contains(TMMProperties.ACTIVE)) continue;
-                    var duration = TMMGameConstants.BLACKOUT_MIN_DURATION + this.world.random.nextInt(TMMGameConstants.BLACKOUT_MAX_DURATION - TMMGameConstants.BLACKOUT_MIN_DURATION);
+                    var duration = GameConstants.BLACKOUT_MIN_DURATION + this.world.random.nextInt(GameConstants.BLACKOUT_MAX_DURATION - GameConstants.BLACKOUT_MIN_DURATION);
                     if (duration > this.ticks) this.ticks = duration;
                     var detail = new BlackoutDetails(pos, duration, state.get(Properties.LIT));
                     detail.init(this.world);

@@ -2,7 +2,7 @@ package dev.doctor4t.trainmurdermystery.cca;
 
 import dev.doctor4t.trainmurdermystery.TMM;
 import dev.doctor4t.trainmurdermystery.client.TMMClient;
-import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
+import dev.doctor4t.trainmurdermystery.game.GameConstants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -43,7 +43,7 @@ public class PlayerMoodComponent implements AutoSyncedComponent, ServerTickingCo
     public void reset() {
         this.tasks.clear();
         this.timesGotten.clear();
-        this.nextTaskTimer = TMMGameConstants.TIME_TO_FIRST_TASK;
+        this.nextTaskTimer = GameConstants.TIME_TO_FIRST_TASK;
         this.setMood(1f);
         this.sync();
     }
@@ -51,13 +51,13 @@ public class PlayerMoodComponent implements AutoSyncedComponent, ServerTickingCo
     @Override
     public void clientTick() {
         if (!TMMComponents.GAME.get(this.player.getWorld()).isRunning() || !TMMClient.isPlayerAliveAndInSurvival()) return;
-        if (!this.tasks.isEmpty()) this.setMood(this.mood - this.tasks.size() * TMMGameConstants.MOOD_DRAIN);
+        if (!this.tasks.isEmpty()) this.setMood(this.mood - this.tasks.size() * GameConstants.MOOD_DRAIN);
     }
 
     @Override
     public void serverTick() {
         if (!TMMComponents.GAME.get(this.player.getWorld()).isRunning() || !TMMClient.isPlayerAliveAndInSurvival()) return;
-        if (!this.tasks.isEmpty()) this.setMood(this.mood - this.tasks.size() * TMMGameConstants.MOOD_DRAIN);
+        if (!this.tasks.isEmpty()) this.setMood(this.mood - this.tasks.size() * GameConstants.MOOD_DRAIN);
         var shouldSync = false;
         this.nextTaskTimer--;
         if (this.nextTaskTimer <= 0) {
@@ -67,7 +67,7 @@ public class PlayerMoodComponent implements AutoSyncedComponent, ServerTickingCo
                 this.timesGotten.putIfAbsent(task.getType(), 1);
                 this.timesGotten.put(task.getType(), this.timesGotten.get(task.getType()) + 1);
             }
-            this.nextTaskTimer = (int) (this.player.getRandom().nextFloat() * (TMMGameConstants.MAX_TASK_COOLDOWN - TMMGameConstants.MIN_TASK_COOLDOWN) + TMMGameConstants.MIN_TASK_COOLDOWN);
+            this.nextTaskTimer = (int) (this.player.getRandom().nextFloat() * (GameConstants.MAX_TASK_COOLDOWN - GameConstants.MIN_TASK_COOLDOWN) + GameConstants.MIN_TASK_COOLDOWN);
             this.nextTaskTimer = Math.max(this.nextTaskTimer / 10, 2);
             shouldSync = true;
         }
@@ -76,7 +76,7 @@ public class PlayerMoodComponent implements AutoSyncedComponent, ServerTickingCo
             task.tick(this.player);
             if (task.isFulfilled(this.player)) {
                 removals.add(task.getType());
-                this.setMood(this.mood + TMMGameConstants.MOOD_GAIN);
+                this.setMood(this.mood + GameConstants.MOOD_GAIN);
                 shouldSync = true;
             }
         }
@@ -98,8 +98,8 @@ public class PlayerMoodComponent implements AutoSyncedComponent, ServerTickingCo
             random -= entry.getValue();
             if (random <= 0) {
                 return switch (entry.getKey()) {
-                    case SLEEP -> new SleepTask(TMMGameConstants.SLEEP_TASK_DURATION);
-                    case OUTSIDE -> new OutsideTask(TMMGameConstants.OUTSIDE_TASK_DURATION);
+                    case SLEEP -> new SleepTask(GameConstants.SLEEP_TASK_DURATION);
+                    case OUTSIDE -> new OutsideTask(GameConstants.OUTSIDE_TASK_DURATION);
                     case EAT -> new EatTask();
                     case DRINK -> new DrinkTask();
                 };

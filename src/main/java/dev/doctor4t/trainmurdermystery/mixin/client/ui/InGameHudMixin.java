@@ -9,7 +9,7 @@ import dev.doctor4t.trainmurdermystery.client.gui.CrosshairRenderer;
 import dev.doctor4t.trainmurdermystery.client.gui.MoodRenderer;
 import dev.doctor4t.trainmurdermystery.client.gui.RoleNameRenderer;
 import dev.doctor4t.trainmurdermystery.client.gui.StoreRenderer;
-import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
+import dev.doctor4t.trainmurdermystery.game.GameConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -93,7 +93,7 @@ public class InGameHudMixin {
             float fadeIn = TMMClient.gameComponent.getFade();
             if (fadeIn >= 0) {
                 this.client.getProfiler().push("tmmFade");
-                float fadeAlpha = MathHelper.lerp(Math.min(fadeIn / TMMGameConstants.FADE_TIME, 1), 0f, 1f);
+                float fadeAlpha = MathHelper.lerp(Math.min(fadeIn / GameConstants.FADE_TIME, 1), 0f, 1f);
                 Color color = new Color(0f, 0f, 0f, fadeAlpha);
 
                 context.fill(RenderLayer.getGuiOverlay(), 0, 0, context.getScaledWindowWidth(), context.getScaledWindowHeight(), color.getRGB());

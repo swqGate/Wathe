@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.function.Consumer;
 
-public interface TMMGameConstants {
+public interface GameConstants {
     // Logistics
     int FADE_TIME = 40;
     int FADE_PAUSE = 20;
@@ -30,6 +30,10 @@ public interface TMMGameConstants {
 
     // Kill count
     float KILL_COUNT_PERCENTAGE = .5f;
+
+    // Corpses
+    int TIME_TO_DECOMPOSITION = getInTicks(1, 0);
+    int DECOMPOSING_TIME = getInTicks(4, 0);
 
     // Game areas
     Box READY_AREA = new Box(-981, -1, -364, -813, 3, -358);

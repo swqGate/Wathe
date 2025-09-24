@@ -107,16 +107,16 @@ public class GameFunctions {
         }
 
         // teleport players to play area
-        List<ServerPlayerEntity> playerPool = world.getPlayers(serverPlayerEntity -> !serverPlayerEntity.isInCreativeMode() && !serverPlayerEntity.isSpectator() && (TMMGameConstants.READY_AREA.contains(serverPlayerEntity.getPos())));
+        List<ServerPlayerEntity> playerPool = world.getPlayers(serverPlayerEntity -> !serverPlayerEntity.isInCreativeMode() && !serverPlayerEntity.isSpectator() && (GameConstants.READY_AREA.contains(serverPlayerEntity.getPos())));
         for (ServerPlayerEntity player : playerPool) {
-            Vec3d pos = player.getPos().add(Vec3d.of(TMMGameConstants.PLAY_POS.subtract(BlockPos.ofFloored(TMMGameConstants.READY_AREA.getMinPos()))));
+            Vec3d pos = player.getPos().add(Vec3d.of(GameConstants.PLAY_POS.subtract(BlockPos.ofFloored(GameConstants.READY_AREA.getMinPos()))));
             player.requestTeleport(pos.getX(), pos.getY(), pos.getZ());
         }
 
         // teleport non playing players
         for (ServerPlayerEntity player : world.getPlayers(serverPlayerEntity -> !playerPool.contains(serverPlayerEntity))) {
             player.changeGameMode(GameMode.SPECTATOR);
-            TMMGameConstants.SPECTATOR_TP.accept(player);
+            GameConstants.SPECTATOR_TP.accept(player);
         }
 
         // limit the game to 14 players, put players 15 to n in spectator mode
@@ -141,7 +141,7 @@ public class GameFunctions {
         roleSelector.assignVigilantes(world, gameComponent, playerPool, hitmanCount);
 
         // set the kill left count as the percentage of players that are not hitmen that need to be killed in order to achieve a win
-        gameComponent.setKillsLeft((int) ((playerPool.size() - hitmanCount) * TMMGameConstants.KILL_COUNT_PERCENTAGE));
+        gameComponent.setKillsLeft((int) ((playerPool.size() - hitmanCount) * GameConstants.KILL_COUNT_PERCENTAGE));
 
         // select rooms
         Collections.shuffle(playerPool);
@@ -271,10 +271,10 @@ public class GameFunctions {
     // returns whether another reset should be attempted
     public static boolean tryResetTrain(ServerWorld serverWorld) {
         if (serverWorld.getServer().getOverworld().equals(serverWorld)) {
-            BlockPos backupMinPos = BlockPos.ofFloored(TMMGameConstants.BACKUP_TRAIN_LOCATION.getMinPos());
-            BlockPos backupMaxPos = BlockPos.ofFloored(TMMGameConstants.BACKUP_TRAIN_LOCATION.getMaxPos());
+            BlockPos backupMinPos = BlockPos.ofFloored(GameConstants.BACKUP_TRAIN_LOCATION.getMinPos());
+            BlockPos backupMaxPos = BlockPos.ofFloored(GameConstants.BACKUP_TRAIN_LOCATION.getMaxPos());
             BlockBox backupTrainBox = BlockBox.create(backupMinPos, backupMaxPos);
-            BlockPos trainMinPos = BlockPos.ofFloored(TMMGameConstants.TRAIN_LOCATION.getMinPos());
+            BlockPos trainMinPos = BlockPos.ofFloored(GameConstants.TRAIN_LOCATION.getMinPos());
             BlockPos trainMaxPos = trainMinPos.add(backupTrainBox.getDimensions());
             BlockBox trainBox = BlockBox.create(trainMinPos, trainMaxPos);
 

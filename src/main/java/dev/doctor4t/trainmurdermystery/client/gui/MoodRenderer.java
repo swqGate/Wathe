@@ -94,7 +94,7 @@ public class MoodRenderer {
 
         context.drawGuiTexture(mood, 5, 6, 14, 17);
         arrowProgress = MathHelper.lerp(tickCounter.getTickDelta(true) / 24, arrowProgress, 0f);
-        player.sendMessage(Text.literal(String.valueOf(moodRender)), true);
+
         if (Math.abs(arrowProgress) > 0.01f) {
             var up = arrowProgress > 0;
             var arrow = up ? ARROW_UP : ARROW_DOWN;

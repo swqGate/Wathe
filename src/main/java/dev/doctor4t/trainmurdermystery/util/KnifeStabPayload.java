@@ -1,7 +1,7 @@
 package dev.doctor4t.trainmurdermystery.util;
 
 import dev.doctor4t.trainmurdermystery.TMM;
-import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
+import dev.doctor4t.trainmurdermystery.game.GameConstants;
 import dev.doctor4t.trainmurdermystery.game.GameFunctions;
 import dev.doctor4t.trainmurdermystery.index.TMMItems;
 import dev.doctor4t.trainmurdermystery.index.TMMSounds;
@@ -32,7 +32,7 @@ public record KnifeStabPayload(int target) implements CustomPayload {
 			GameFunctions.killPlayer(target, true);
 			target.playSound(TMMSounds.ITEM_KNIFE_STAB, 1.0f, 1.0f);
 			player.swingHand(Hand.MAIN_HAND);
-			if (!player.isCreative()) player.getItemCooldownManager().set(TMMItems.KNIFE, TMMGameConstants.KNIFE_COOLDOWN);
+			if (!player.isCreative()) player.getItemCooldownManager().set(TMMItems.KNIFE, GameConstants.KNIFE_COOLDOWN);
 		}
 	}
 }

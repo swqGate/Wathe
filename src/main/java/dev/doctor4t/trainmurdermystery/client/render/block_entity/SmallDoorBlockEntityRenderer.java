@@ -2,15 +2,13 @@ package dev.doctor4t.trainmurdermystery.client.render.block_entity;
 
 import dev.doctor4t.trainmurdermystery.block_entity.SmallDoorBlockEntity;
 import dev.doctor4t.trainmurdermystery.client.animation.SmallDoorAnimations;
-import dev.doctor4t.trainmurdermystery.client.model.TrainMurderMysteryEntityModelLayers;
+import dev.doctor4t.trainmurdermystery.client.model.TMMModelLayers;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RotationAxis;
-import org.joml.Quaternionf;
 
 public class SmallDoorBlockEntityRenderer extends AnimatableBlockEntityRenderer<SmallDoorBlockEntity> {
 
@@ -19,7 +17,7 @@ public class SmallDoorBlockEntityRenderer extends AnimatableBlockEntityRenderer<
 
     public SmallDoorBlockEntityRenderer(Identifier texture, BlockEntityRendererFactory.Context ctx) {
         this.texture = texture;
-        this.part = ctx.getLayerModelPart(TrainMurderMysteryEntityModelLayers.SMALL_DOOR);
+        this.part = ctx.getLayerModelPart(TMMModelLayers.SMALL_DOOR);
     }
 
     public static TexturedModelData getTexturedModelData() {

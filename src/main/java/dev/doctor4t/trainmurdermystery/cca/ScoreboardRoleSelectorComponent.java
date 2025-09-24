@@ -55,11 +55,7 @@ public class ScoreboardRoleSelectorComponent implements AutoSyncedComponent {
             }
         }
         for (var player : hitmen) {
-            player.giveItemStack(new ItemStack(TMMItems.KNIFE));
-            player.giveItemStack(new ItemStack(TMMItems.LOCKPICK));
-            var letter = new ItemStack(TMMItems.LETTER);
-            letter.set(DataComponentTypes.ITEM_NAME, Text.translatable(letter.getTranslationKey() + ".instructions"));
-            player.giveItemStack(letter);
+//            player.giveItemStack(new ItemStack(TMMItems.KNIFE));
             gameComponent.addHitman(player);
         }
     }

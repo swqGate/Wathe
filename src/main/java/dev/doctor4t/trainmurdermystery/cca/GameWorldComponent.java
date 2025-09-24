@@ -1,7 +1,7 @@
 package dev.doctor4t.trainmurdermystery.cca;
 
 import dev.doctor4t.trainmurdermystery.game.GameFunctions;
-import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
+import dev.doctor4t.trainmurdermystery.game.GameConstants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -50,7 +50,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
     }
 
     public void setFade(int fade) {
-        this.fade = MathHelper.clamp(fade, 0, TMMGameConstants.FADE_TIME + TMMGameConstants.FADE_PAUSE);
+        this.fade = MathHelper.clamp(fade, 0, GameConstants.FADE_TIME + GameConstants.FADE_PAUSE);
     }
 
     public int getKillsLeft() {
@@ -188,7 +188,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
             if (trainComponent.getTrainSpeed() > 0) {
                 for (ServerPlayerEntity player : serverWorld.getPlayers()) {
                     if (!GameFunctions.isPlayerAliveAndSurvival(player)) {
-                        GameFunctions.limitPlayerToBox(player, TMMGameConstants.PLAY_AREA);
+                        GameFunctions.limitPlayerToBox(player, GameConstants.PLAY_AREA);
                     }
                 }
             }
@@ -196,7 +196,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
             if (this.isRunning()) {
                 // kill players who fell off the train
                 for (ServerPlayerEntity player : serverWorld.getPlayers()) {
-                    if (GameFunctions.isPlayerAliveAndSurvival(player) && player.getY() < TMMGameConstants.PLAY_AREA.minY) {
+                    if (GameFunctions.isPlayerAliveAndSurvival(player) && player.getY() < GameConstants.PLAY_AREA.minY) {
                         GameFunctions.killPlayer(player, false);
                     }
                 }
@@ -230,7 +230,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
         if (this.getGameStatus() == GameStatus.STARTING || this.getGameStatus() == GameStatus.STOPPING) {
             this.setFade(fade+1);
 
-            if (this.getFade() >= TMMGameConstants.FADE_TIME + TMMGameConstants.FADE_PAUSE) {
+            if (this.getFade() >= GameConstants.FADE_TIME + GameConstants.FADE_PAUSE) {
                 if (world instanceof ServerWorld serverWorld) {
                     if (this.getGameStatus() == GameStatus.STARTING)
                         GameFunctions.initializeGame(serverWorld);

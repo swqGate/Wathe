@@ -9,7 +9,7 @@ import dev.doctor4t.trainmurdermystery.cca.PlayerMoodComponent;
 import dev.doctor4t.trainmurdermystery.cca.PlayerPoisonComponent;
 import dev.doctor4t.trainmurdermystery.cca.TMMComponents;
 import dev.doctor4t.trainmurdermystery.game.GameFunctions;
-import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
+import dev.doctor4t.trainmurdermystery.game.GameConstants;
 import dev.doctor4t.trainmurdermystery.index.TMMDataComponentTypes;
 import dev.doctor4t.trainmurdermystery.index.TMMItems;
 import dev.doctor4t.trainmurdermystery.util.PoisonUtils;
@@ -61,7 +61,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             if (this.isSprinting()) {
                 sprintingTicks = Math.max(sprintingTicks - 1, 0);
             } else {
-                sprintingTicks = Math.min(sprintingTicks + 0.25f, TMMGameConstants.MAX_SPRINTING_TICKS);
+                sprintingTicks = Math.min(sprintingTicks + 0.25f, GameConstants.MAX_SPRINTING_TICKS);
             }
 
             if (sprintingTicks <= 0) {
