@@ -208,5 +208,35 @@
 			"trainmurdermystery:ui/shop_buy_fail"
 		],
 		"subtitle": "subtitles.ui.shop.buy_fail"
+	},
+	"ui.piano": {
+		"sounds": [
+			"trainmurdermystery:ui/piano"
+		],
+		"subtitle": "subtitles.ui.piano"
+	},
+	"ui.piano_win": {
+		"sounds": [
+			"trainmurdermystery:ui/piano_win"
+		],
+		"subtitle": "subtitles.ui.piano_win"
+	},
+	"ui.piano_lose": {
+		"sounds": [
+			"trainmurdermystery:ui/piano_lose"
+		],
+		"subtitle": "subtitles.ui.piano_lose"
+	},
+	"ui.piano_stinger": {
+		"sounds": [
+			"trainmurdermystery:ui/piano_stinger"
+		],
+		"subtitle": "subtitles.ui.piano_stinger"
+	},
+	"ui.riser": {
+		"sounds": [
+			"trainmurdermystery:ui/riser"
+		],
+		"subtitle": "subtitles.ui.riser"
 	}
 }

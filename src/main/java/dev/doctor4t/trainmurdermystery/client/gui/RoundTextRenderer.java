@@ -6,6 +6,7 @@ import dev.doctor4t.trainmurdermystery.cca.GameRoundEndComponent;
 import dev.doctor4t.trainmurdermystery.cca.TMMComponents;
 import dev.doctor4t.trainmurdermystery.game.GameConstants;
 import dev.doctor4t.trainmurdermystery.game.GameFunctions;
+import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -113,8 +114,8 @@ public class RoundTextRenderer {
                 if (entry.wasDead()) {
                     context.getMatrices().translate(13, 0, 0);
                     context.getMatrices().scale(2f, 1f, 1f);
-                    context.drawText(renderer, "x", -renderer.getWidth("x") / 2, 0, 0xBB1010, false);
-                    context.drawText(renderer, "x", -renderer.getWidth("x") / 2, 1, 0x201010, false);
+                    context.drawText(renderer, "x", -renderer.getWidth("x") / 2, 0, 0xE10000, false);
+                    context.drawText(renderer, "x", -renderer.getWidth("x") / 2, 1, 0x550000, false);
                 }
                 context.getMatrices().pop();
             }
@@ -125,21 +126,25 @@ public class RoundTextRenderer {
     public static void tick() {
         if (welcomeTime > 0) {
             switch (welcomeTime) {
+                case 200 -> {
+                    var player = MinecraftClient.getInstance().player;
+                    if (player != null) player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), TMMSounds.UI_RISER, SoundCategory.MASTER, 10f, 1f, player.getRandom().nextLong());
+                }
                 case 180 -> {
                     var player = MinecraftClient.getInstance().player;
-                    if (player != null) player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.PLAYERS, 1f, 1.25f, player.getRandom().nextLong());
+                    if (player != null) player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), TMMSounds.UI_PIANO, SoundCategory.MASTER, 10f, 1.25f, player.getRandom().nextLong());
                 }
                 case 120 -> {
                     var player = MinecraftClient.getInstance().player;
-                    if (player != null) player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.PLAYERS, 1f, 1.5f, player.getRandom().nextLong());
+                    if (player != null) player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), TMMSounds.UI_PIANO, SoundCategory.MASTER, 10f, 1.5f, player.getRandom().nextLong());
                 }
                 case 60 -> {
                     var player = MinecraftClient.getInstance().player;
-                    if (player != null) player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.PLAYERS, 1f, 1.75f, player.getRandom().nextLong());
+                    if (player != null) player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), TMMSounds.UI_PIANO, SoundCategory.MASTER, 10f, 1.75f, player.getRandom().nextLong());
                 }
                 case 1 -> {
                     var player = MinecraftClient.getInstance().player;
-                    if (player != null) player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.ENTITY_WITHER_SPAWN, SoundCategory.PLAYERS, 1f, 1.2f, player.getRandom().nextLong());
+                    if (player != null) player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), TMMSounds.UI_PIANO_STINGER, SoundCategory.MASTER, 10f, 1f, player.getRandom().nextLong());
                 }
             }
             welcomeTime--;
@@ -147,7 +152,7 @@ public class RoundTextRenderer {
         if (endTime > 0) {
             if (endTime == END_DURATION) {
                 var player = MinecraftClient.getInstance().player;
-                if (player != null) player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.ENTITY_FIREWORK_ROCKET_LAUNCH, SoundCategory.PLAYERS, 1f, 1f, player.getRandom().nextLong());
+                if (player != null) player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), GameRoundEndComponent.KEY.get(player.getWorld()).didWin(player.getUuid()) ? TMMSounds.UI_PIANO_WIN : TMMSounds.UI_PIANO_LOSE, SoundCategory.MASTER, 10f, 1f, player.getRandom().nextLong());
             }
             endTime--;
         }

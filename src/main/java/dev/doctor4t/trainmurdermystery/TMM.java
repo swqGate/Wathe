@@ -163,5 +163,3 @@ public class TMM implements ModInitializer {
 // TODO: small video tutorial on how to play
 // TODO: Ability to customize time of day for supporters + snow density
 // TODO: Initial discovery mode
-// TODO: round start menu
-// TODO: round end message (reveal all roles and who started with guns)

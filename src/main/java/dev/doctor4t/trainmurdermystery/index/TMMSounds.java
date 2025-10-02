@@ -42,9 +42,14 @@ public interface TMMSounds {
     SoundEvent AMBIENT_PSYCHO_DRONE = registrar.create("ambient.psycho_drone");
     SoundEvent AMBIENT_BLACKOUT = registrar.create("ambient.blackout");
 
-    // Shop
+    // UI
     SoundEvent UI_SHOP_BUY = registrar.create("ui.shop.buy");
     SoundEvent UI_SHOP_BUY_FAIL = registrar.create("ui.shop.buy_fail");
+    SoundEvent UI_PIANO = registrar.create("ui.piano");
+    SoundEvent UI_PIANO_WIN = registrar.create("ui.piano_win");
+    SoundEvent UI_PIANO_LOSE = registrar.create("ui.piano_lose");
+    SoundEvent UI_PIANO_STINGER = registrar.create("ui.piano_stinger");
+    SoundEvent UI_RISER = registrar.create("ui.riser");
 
     static void initialize() {
         registrar.registerEntries();
