@@ -33,7 +33,6 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
     private int fade = 0;
 
     private List<UUID> killers = new ArrayList<>();
-    private int killsLeft = 0;
 
     private List<UUID> vigilantes = new ArrayList<>();
 
@@ -55,20 +54,6 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
 
     public void setFade(int fade) {
         this.fade = MathHelper.clamp(fade, 0, GameConstants.FADE_TIME + GameConstants.FADE_PAUSE);
-    }
-
-    public int getKillsLeft() {
-        return killsLeft;
-    }
-
-    public void setKillsLeft(int killsLeft) {
-        this.killsLeft = killsLeft;
-        this.sync();
-    }
-
-    public void decrementKillsLeft() {
-        this.killsLeft--;
-        this.sync();
     }
 
     public void setGameStatus(GameStatus gameStatus) {
@@ -170,7 +155,6 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
         this.setGameStatus(GameStatus.valueOf(nbtCompound.getString("GameStatus")));
 
         this.setFade(nbtCompound.getInt("Fade"));
-        this.setKillsLeft(nbtCompound.getInt("KillsLeft"));
         this.setPsychosActive(nbtCompound.getInt("PsychosActive"));
 
         this.setKillers(uuidListFromNbt(nbtCompound, "Killers"));
@@ -192,7 +176,6 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
         nbtCompound.putString("GameStatus", this.gameStatus.toString());
 
         nbtCompound.putInt("Fade", fade);
-        nbtCompound.putInt("KillsLeft", killsLeft);
         nbtCompound.putInt("PsychosActive", psychosActive);
 
         nbtCompound.put("Killers", nbtFromUuidList(getKillers()));
@@ -256,6 +239,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
             }
 
             if (this.isRunning()) {
+                var civilianAlive = false;
                 for (ServerPlayerEntity player : serverWorld.getPlayers()) {
                     // kill players who fell off the train
                     if (GameFunctions.isPlayerAliveAndSurvival(player) && player.getY() < GameConstants.PLAY_AREA.minY) {
@@ -265,6 +249,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
                     // passive money
                     Integer balanceToAdd = GameConstants.PASSIVE_MONEY_TICKER.apply(world.getTime());
                     if (balanceToAdd > 0) PlayerShopComponent.KEY.get(player).addToBalance(balanceToAdd);
+                    if (this.isCivilian(player) && !GameFunctions.isPlayerEliminated(player)) civilianAlive = true;
                 }
 
                 // check killer win condition: kill count reached
@@ -272,7 +257,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
 
                 if (!discoveryMode) {
                     // check killer win condition (kill count reached)
-                    if (killsLeft <= 0) {
+                    if (!civilianAlive) {
                         winStatus = GameFunctions.WinStatus.KILLERS;
                     }
 

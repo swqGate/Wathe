@@ -43,9 +43,6 @@ public interface GameConstants {
     // Sprint
     int MAX_SPRINTING_TICKS = getInTicks(0, 10);
 
-    // Kill count
-    float KILL_COUNT_PERCENTAGE = .7f;
-
     // Corpses
     int TIME_TO_DECOMPOSITION = getInTicks(1, 0);
     int DECOMPOSING_TIME = getInTicks(4, 0);
