@@ -50,7 +50,6 @@ public class TMM implements ModInitializer {
         // Register commands
         CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> {
             GiveRoomKeyCommand.register(dispatcher);
-            SetTrainSpeedCommand.register(dispatcher);
             StartCommand.register(dispatcher);
             StopCommand.register(dispatcher);
             CheckWeightsCommand.register(dispatcher);
