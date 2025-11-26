@@ -15,9 +15,9 @@ public interface AllowPlayerDeath {
      * Any other death type not explicitly defined will default to 'generic'.
      * @see dev.doctor4t.trainmurdermystery.game.GameConstants.DeathReasons
      */
-    Event<AllowPlayerDeath> EVENT = createArrayBacked(AllowPlayerDeath.class, listeners -> (player, deathReason) -> {
+    Event<AllowPlayerDeath> EVENT = createArrayBacked(AllowPlayerDeath.class, listeners -> (victim, killer, deathReason) -> {
         for (AllowPlayerDeath listener : listeners) {
-            if (!listener.allowDeath(player, deathReason)) {
+            if (!listener.allowDeath(victim, killer, deathReason)) {
                 return false;
             }
         }
@@ -25,5 +25,5 @@ public interface AllowPlayerDeath {
     });
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    boolean allowDeath(PlayerEntity player, Identifier deathReason);
+    boolean allowDeath(PlayerEntity victim, PlayerEntity killer, Identifier deathReason);
 }
