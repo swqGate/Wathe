@@ -3,14 +3,14 @@ package dev.doctor4t.trainmurdermystery.game;
 import com.google.common.collect.Lists;
 import dev.doctor4t.trainmurdermystery.TMM;
 import dev.doctor4t.trainmurdermystery.api.GameMode;
-import dev.doctor4t.trainmurdermystery.api.TMMGameModes;
+import dev.doctor4t.trainmurdermystery.api.event.GameEvents;
 import dev.doctor4t.trainmurdermystery.cca.*;
 import dev.doctor4t.trainmurdermystery.compat.TrainVoicePlugin;
 import dev.doctor4t.trainmurdermystery.entity.FirecrackerEntity;
 import dev.doctor4t.trainmurdermystery.entity.NoteEntity;
 import dev.doctor4t.trainmurdermystery.entity.PlayerBodyEntity;
-import dev.doctor4t.trainmurdermystery.event.AllowPlayerDeath;
-import dev.doctor4t.trainmurdermystery.event.ShouldDropOnDeath;
+import dev.doctor4t.trainmurdermystery.api.event.AllowPlayerDeath;
+import dev.doctor4t.trainmurdermystery.api.event.ShouldDropOnDeath;
 import dev.doctor4t.trainmurdermystery.index.TMMDataComponentTypes;
 import dev.doctor4t.trainmurdermystery.index.TMMEntities;
 import dev.doctor4t.trainmurdermystery.index.TMMItems;
@@ -112,10 +112,13 @@ public class GameFunctions {
         GameWorldComponent gameComponent = GameWorldComponent.KEY.get(serverWorld);
         List<ServerPlayerEntity> readyPlayerList = getReadyPlayerList(serverWorld);
 
+        GameEvents.ON_GAME_START.invoker().onGameStart(gameComponent.getGameMode());
         baseInitialize(serverWorld, gameComponent, readyPlayerList);
         gameComponent.getGameMode().initializeGame(serverWorld, gameComponent, readyPlayerList);
 
         gameComponent.sync();
+
+        GameEvents.ON_FINISH_INITIALIZE.invoker().onFinishInitialize(serverWorld, gameComponent);
     }
 
     private static void baseInitialize(ServerWorld serverWorld, GameWorldComponent gameComponent, List<ServerPlayerEntity> players) {
@@ -230,6 +233,7 @@ public class GameFunctions {
 
     public static void finalizeGame(ServerWorld world) {
         GameWorldComponent gameComponent = GameWorldComponent.KEY.get(world);
+        GameEvents.ON_GAME_STOP.invoker().onGameStop(gameComponent.getGameMode());
         gameComponent.getGameMode().finalizeGame(world, gameComponent);
 
         WorldBlackoutComponent.KEY.get(world).reset();
@@ -253,6 +257,8 @@ public class GameFunctions {
         gameComponent.setGameStatus(GameWorldComponent.GameStatus.INACTIVE);
         trainComponent.setTime(0);
         gameComponent.sync();
+
+        GameEvents.ON_FINISH_FINALIZE.invoker().onFinishFinalize(world, gameComponent);
     }
 
     public static void resetPlayer(ServerPlayerEntity player) {
@@ -285,7 +291,7 @@ public class GameFunctions {
     public static void killPlayer(PlayerEntity victim, boolean spawnBody, @Nullable PlayerEntity killer, Identifier deathReason) {
         PlayerPsychoComponent component = PlayerPsychoComponent.KEY.get(victim);
 
-        if (!AllowPlayerDeath.EVENT.invoker().allowDeath(victim, deathReason)) return;
+        if (!AllowPlayerDeath.EVENT.invoker().allowDeath(victim, killer, deathReason)) return;
         if (component.getPsychoTicks() > 0) {
             if (component.getArmour() > 0) {
                 component.setArmour(component.getArmour() - 1);
@@ -335,7 +341,7 @@ public class GameFunctions {
         for (List<ItemStack> list : victim.getInventory().combinedInventory) {
             for (int i = 0; i < list.size(); i++) {
                 ItemStack stack = list.get(i);
-                if (shouldDropOnDeath(stack)) {
+                if (shouldDropOnDeath(stack, victim)) {
                     victim.dropItem(stack, true, false);
                     list.set(i, ItemStack.EMPTY);
                 }
@@ -350,8 +356,8 @@ public class GameFunctions {
         TrainVoicePlugin.addPlayer(victim.getUuid());
     }
 
-    public static boolean shouldDropOnDeath(@NotNull ItemStack stack) {
-        return !stack.isEmpty() && (stack.isOf(TMMItems.REVOLVER) || ShouldDropOnDeath.EVENT.invoker().shouldDrop(stack));
+    public static boolean shouldDropOnDeath(@NotNull ItemStack stack, PlayerEntity victim) {
+        return !stack.isEmpty() && (stack.isOf(TMMItems.REVOLVER) || ShouldDropOnDeath.EVENT.invoker().shouldDrop(stack, victim));
     }
 
     public static boolean isPlayerAliveAndSurvival(PlayerEntity player) {
