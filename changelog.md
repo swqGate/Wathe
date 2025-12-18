@@ -3,9 +3,16 @@ Wathe 1.3 - 1.21.1
 ------------------------------------------------------
 - Changed the mod identifier from "trainmurdermystery" to "wathe" and renamed it to avoid confusion with the Harpy Express modpack and reflect the mod now allowing maps other than trains
   - Previous maps should still be compatible, as block, item and entity aliases were added to transition mod identifiers
-- Added a /mapVariables command that allows changing variables for custom maps:
-  - isTrain: Whether the map is a train and should enable train visuals (like movement, snow, fog...) on game start.
-  - roomCount: The amount of rooms on the map. Determines the range of room keys player receive on game start. 0 to disable room key giving.
+- Added a new Map Effect API class
+  - Stored on the Game Component, this new class allows modders to make custom effects for maps, with custom initialize
+    and finalize logic independent of the game mode
+  - Using the Last Voyage of the Harpy Express as an example, the wathe:harpy_express map effects (excluding the lobby
+    one) give the players the keys to their room and their letters, as well as setting the time of day and all other
+    ambient effects for the train
+  - /wathe:start now requires a map effect identifier to start the game
+  - For instance, /wathe:start wathe:murder wathe:harpy_express_day allows you to play the murder mystery game mode
+    during the day
+- Added a /wathe:mapVariables command that allows changing variables for custom maps:
   - spawnPos: The spawn position and orientation players will be reset to once the game ends.
   - spectatorSpawnPos: The spawn position and orientation players will be set to when set as spectators at the start of a game.
   - readyArea: The lobby area which players need to be in to be selected for a game.
@@ -13,9 +20,10 @@ Wathe 1.3 - 1.21.1
   - playArea: The play area outside which players will be eliminated.
   - resetTemplateArea: The template that will be copied over the play area in order to reset the map.
   - resetPasteOffset: The offset at which the template should be pasted.
-- Moved weights, bounds, auto-start and backfire commands to a new /gameSettings command
-- Added a new role dividend setting to /gameSettings that allows setting custom killer and vigilante counts
+- Moved weights, bounds, auto-start and backfire commands to a new /wathe:gameSettings command
+- Added a new role dividend setting to /wathe:gameSettings that allows setting custom killer and vigilante counts
 - Lowered the default dividend for both killers and vigilantes to 5 instead of 6
+- Fixed double doors not jamming together
 - Fixed Derringers not replenishing on kill
 - Fixed Revolvers being able to be double fired
 - Tweaked the API to allow more modability (PunIsIntendeds)

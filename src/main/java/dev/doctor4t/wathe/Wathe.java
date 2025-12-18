@@ -5,6 +5,7 @@ import dev.doctor4t.wathe.block.DoorPartBlock;
 import dev.doctor4t.wathe.cca.GameWorldComponent;
 import dev.doctor4t.wathe.command.*;
 import dev.doctor4t.wathe.command.argument.GameModeArgumentType;
+import dev.doctor4t.wathe.command.argument.MapEffectArgumentType;
 import dev.doctor4t.wathe.command.argument.TimeOfDayArgumentType;
 import dev.doctor4t.wathe.game.GameConstants;
 import dev.doctor4t.wathe.index.*;
@@ -17,6 +18,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -56,6 +58,7 @@ public class Wathe implements ModInitializer {
         // Register command argument types
         ArgumentTypeRegistry.registerArgumentType(id("timeofday"), TimeOfDayArgumentType.class, ConstantArgumentSerializer.of(TimeOfDayArgumentType::timeofday));
         ArgumentTypeRegistry.registerArgumentType(id("gamemode"), GameModeArgumentType.class, ConstantArgumentSerializer.of(GameModeArgumentType::gameMode));
+        ArgumentTypeRegistry.registerArgumentType(id("mapeffect"), MapEffectArgumentType.class, ConstantArgumentSerializer.of(MapEffectArgumentType::mapEffect));
 
         // Register commands
         CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> {
@@ -132,7 +135,7 @@ public class Wathe implements ModInitializer {
         ServerPlayerEntity player = source.getPlayer();
         if (player == null || !player.getClass().equals(ServerPlayerEntity.class)) return 0;
 
-        if (isSupporter(player)) {
+        if (isSupporter(player) || FabricLoader.getInstance().isDevelopmentEnvironment()) {
             runnable.run();
             return 1;
         } else {

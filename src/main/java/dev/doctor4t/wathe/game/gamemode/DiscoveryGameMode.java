@@ -1,10 +1,11 @@
-package dev.doctor4t.wathe.game;
+package dev.doctor4t.wathe.game.gamemode;
 
 import dev.doctor4t.wathe.api.GameMode;
 import dev.doctor4t.wathe.api.WatheRoles;
 import dev.doctor4t.wathe.cca.GameTimeComponent;
 import dev.doctor4t.wathe.cca.GameWorldComponent;
 import dev.doctor4t.wathe.cca.TrainWorldComponent;
+import dev.doctor4t.wathe.game.GameFunctions;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -18,8 +19,6 @@ public class DiscoveryGameMode extends GameMode {
 
     @Override
     public void initializeGame(ServerWorld serverWorld, GameWorldComponent gameWorldComponent, List<ServerPlayerEntity> players) {
-        TrainWorldComponent.KEY.get(serverWorld).setTimeOfDay(TrainWorldComponent.TimeOfDay.DAY);
-
         for (ServerPlayerEntity player : players) {
             gameWorldComponent.addRole(player, WatheRoles.DISCOVERY_CIVILIAN);
         }

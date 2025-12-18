@@ -1,9 +1,9 @@
 package dev.doctor4t.wathe.api;
 
 import dev.doctor4t.wathe.Wathe;
-import dev.doctor4t.wathe.game.DiscoveryGameMode;
-import dev.doctor4t.wathe.game.LooseEndsGameMode;
-import dev.doctor4t.wathe.game.MurderGameMode;
+import dev.doctor4t.wathe.game.gamemode.DiscoveryGameMode;
+import dev.doctor4t.wathe.game.gamemode.LooseEndsGameMode;
+import dev.doctor4t.wathe.game.gamemode.MurderGameMode;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;

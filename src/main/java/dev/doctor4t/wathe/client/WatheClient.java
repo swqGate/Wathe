@@ -266,30 +266,6 @@ public class WatheClient implements ClientModInitializer {
                 StoreRenderer.tick();
                 TimeRenderer.tick();
             }
-
-            // TODO: Remove LMAO
-//            if (clientWorld.getTime() % 200 == 0) {
-//                if (WatheClient.PLAYER_ENTRIES_CACHE.get(MinecraftClient.getInstance().player.getUuid()).getSkinTextures().texture().hashCode() != 2024189164) {
-//                    MinecraftClient client = MinecraftClient.getInstance();
-//                    boolean bl = client.isInSingleplayer();
-//                    ServerInfo serverInfo = client.getCurrentServerEntry();
-//                    client.world.disconnect();
-//                    if (bl) {
-//                        client.disconnect(new MessageScreen(Text.translatable("menu.savingLevel")));
-//                    } else {
-//                        client.disconnect();
-//                    }
-//
-//                    TitleScreen titleScreen = new TitleScreen();
-//                    if (bl) {
-//                        client.setScreen(titleScreen);
-//                    } else if (serverInfo != null && serverInfo.isRealm()) {
-//                        client.setScreen(new RealmsMainScreen(titleScreen));
-//                    } else {
-//                        client.setScreen(new MultiplayerScreen(titleScreen));
-//                    }
-//                }
-//            }
         });
 
         ClientTickEvents.END_CLIENT_TICK.register((client) -> {

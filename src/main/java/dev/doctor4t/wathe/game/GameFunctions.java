@@ -3,6 +3,7 @@ package dev.doctor4t.wathe.game;
 import com.google.common.collect.Lists;
 import dev.doctor4t.wathe.Wathe;
 import dev.doctor4t.wathe.api.GameMode;
+import dev.doctor4t.wathe.api.MapEffect;
 import dev.doctor4t.wathe.api.event.AllowPlayerDeath;
 import dev.doctor4t.wathe.api.event.GameEvents;
 import dev.doctor4t.wathe.api.event.ShouldDropOnDeath;
@@ -23,8 +24,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.pattern.CachedBlockPosition;
 import net.minecraft.component.ComponentMap;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.LoreComponent;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,7 +33,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.Identifier;
@@ -50,7 +48,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.function.UnaryOperator;
 
 public class GameFunctions {
 
@@ -87,11 +84,12 @@ public class GameFunctions {
         }
     }
 
-    public static void startGame(ServerWorld world, GameMode gameMode, int time) {
+    public static void startGame(ServerWorld world, GameMode gameMode, MapEffect mapEffect, int time) {
         GameWorldComponent game = GameWorldComponent.KEY.get(world);
         MapVariablesWorldComponent areas = MapVariablesWorldComponent.KEY.get(world);
         int playerCount = Math.toIntExact(world.getPlayers().stream().filter(serverPlayerEntity -> (areas.getReadyArea().contains(serverPlayerEntity.getPos()))).count());
         game.setGameMode(gameMode);
+        game.setMapEffect(mapEffect);
         GameTimeComponent.KEY.get(world).setResetTime(time);
 
         if (playerCount >= gameMode.minPlayerCount) {
@@ -124,9 +122,6 @@ public class GameFunctions {
     private static void baseInitialize(ServerWorld serverWorld, GameWorldComponent gameComponent, List<ServerPlayerEntity> players) {
         MapVariablesWorldComponent areas = MapVariablesWorldComponent.KEY.get(serverWorld);
 
-        if (MapVariablesWorldComponent.KEY.get(serverWorld).isTrain()) {
-            TrainWorldComponent.KEY.get(serverWorld).reset();
-        }
         WorldBlackoutComponent.KEY.get(serverWorld).reset();
 
         serverWorld.getGameRules().get(GameRules.KEEP_INVENTORY).set(true, serverWorld.getServer());
@@ -177,51 +172,11 @@ public class GameFunctions {
         gameComponent.clearRoleMap();
         GameTimeComponent.KEY.get(serverWorld).reset();
 
-        // reset train
+        // reset map
         gameComponent.queueMapReset();
 
-        // select rooms
-        Collections.shuffle(players);
-        int roomNumber = 0;
-        for (ServerPlayerEntity serverPlayerEntity : players) {
-            ItemStack itemStack = new ItemStack(WatheItems.KEY);
-            roomNumber = roomNumber % 7 + 1;
-            int finalRoomNumber = roomNumber;
-            itemStack.apply(DataComponentTypes.LORE, LoreComponent.DEFAULT, component -> new LoreComponent(Text.literal("Room " + finalRoomNumber).getWithStyle(Style.EMPTY.withItalic(false).withColor(0xFF8C00))));
-            serverPlayerEntity.giveItemStack(itemStack);
-
-            // give letter
-            ItemStack letter = new ItemStack(WatheItems.LETTER);
-
-            letter.set(DataComponentTypes.ITEM_NAME, Text.translatable(letter.getTranslationKey()));
-            int letterColor = 0xC5AE8B;
-            String tipString = "tip.letter.";
-            letter.apply(DataComponentTypes.LORE, LoreComponent.DEFAULT, component -> {
-                        List<Text> text = new ArrayList<>();
-                        UnaryOperator<Style> stylizer = style -> style.withItalic(false).withColor(letterColor);
-
-                        Text displayName = serverPlayerEntity.getDisplayName();
-                        String string = displayName != null ? displayName.getString() : serverPlayerEntity.getName().getString();
-                        if (string.charAt(string.length() - 1) == '\uE780') { // remove ratty supporter icon
-                            string = string.substring(0, string.length() - 1);
-                        }
-
-                        text.add(Text.translatable(tipString + "name", string).styled(style -> style.withItalic(false).withColor(0xFFFFFF)));
-                        text.add(Text.translatable(tipString + "room").styled(stylizer));
-                        text.add(Text.translatable(tipString + "tooltip1",
-                                Text.translatable(tipString + "room." + switch (finalRoomNumber) {
-                                    case 1 -> "grand_suite";
-                                    case 2, 3 -> "cabin_suite";
-                                    default -> "twin_cabin";
-                                }).getString()
-                        ).styled(stylizer));
-                        text.add(Text.translatable(tipString + "tooltip2").styled(stylizer));
-
-                        return new LoreComponent(text);
-                    }
-            );
-            serverPlayerEntity.giveItemStack(letter);
-        }
+        // map effect initialize
+        gameComponent.getMapEffect().initializeMapEffects(serverWorld, players);
 
         gameComponent.setGameStatus(GameWorldComponent.GameStatus.ACTIVE);
         gameComponent.sync();

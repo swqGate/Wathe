@@ -24,12 +24,6 @@ public class MapVariablesWorldComponent implements AutoSyncedComponent {
         KEY.sync(this.world);
     }
 
-    // Visual settings
-    boolean isTrain = true;
-
-    // Item settings
-    int roomCount = 7;
-
     // Game areas
     PosWithOrientation spawnPos = new PosWithOrientation(-872.5f, 0f, -323f, 90f, 0f);
     PosWithOrientation spectatorSpawnPos = new PosWithOrientation(-68f, 133f, -535.5f, -90f, 15f);
@@ -40,24 +34,6 @@ public class MapVariablesWorldComponent implements AutoSyncedComponent {
 
     Box resetTemplateArea = new Box(-57, 64, -531, 177, 74, -541);
     Vec3i resetPasteOffset = new Vec3i(0, 55, 0);
-
-    public boolean isTrain() {
-        return isTrain;
-    }
-
-    public void setTrain(boolean train) {
-        isTrain = train;
-        this.sync();
-    }
-
-    public int getRoomCount() {
-        return roomCount;
-    }
-
-    public void setRoomCount(int roomCount) {
-        this.roomCount = roomCount;
-        this.sync();
-    }
 
     public PosWithOrientation getSpawnPos() {
         return spawnPos;
@@ -124,10 +100,6 @@ public class MapVariablesWorldComponent implements AutoSyncedComponent {
 
     @Override
     public void readFromNbt(@NotNull NbtCompound tag, RegistryWrapper.@NotNull WrapperLookup registryLookup) {
-        this.isTrain = tag.getBoolean("isTrain");
-
-        this.roomCount = tag.getInt("roomCount");
-
         this.spawnPos = getPosWithOrientationFromNbt(tag, "spawnPos");
         this.spectatorSpawnPos = getPosWithOrientationFromNbt(tag, "spectatorSpawnPos");
         this.readyArea = getBoxFromNbt(tag, "readyArea");
@@ -139,10 +111,6 @@ public class MapVariablesWorldComponent implements AutoSyncedComponent {
 
     @Override
     public void writeToNbt(@NotNull NbtCompound tag, RegistryWrapper.@NotNull WrapperLookup registryLookup) {
-        tag.putBoolean("isTrain", this.isTrain);
-
-        tag.putInt("roomCount", this.roomCount);
-
         writePosWithOrientationToNbt(tag, this.spawnPos, "spawnPos");
         writePosWithOrientationToNbt(tag, this.spectatorSpawnPos, "spectatorSpawnPos");
         writeBoxToNbt(tag, this.readyArea, "readyArea");

@@ -1,9 +1,11 @@
-package dev.doctor4t.wathe.game;
+package dev.doctor4t.wathe.game.gamemode;
 
 import dev.doctor4t.wathe.api.GameMode;
 import dev.doctor4t.wathe.api.WatheRoles;
 import dev.doctor4t.wathe.cca.*;
 import dev.doctor4t.wathe.client.gui.RoleAnnouncementTexts;
+import dev.doctor4t.wathe.game.GameConstants;
+import dev.doctor4t.wathe.game.GameFunctions;
 import dev.doctor4t.wathe.util.AnnounceWelcomePayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -34,8 +36,6 @@ public class MurderGameMode extends GameMode {
 
     @Override
     public void initializeGame(ServerWorld serverWorld, GameWorldComponent gameWorldComponent, List<ServerPlayerEntity> players) {
-        TrainWorldComponent.KEY.get(serverWorld).setTimeOfDay(TrainWorldComponent.TimeOfDay.NIGHT);
-
         int killerCount = assignRolesAndGetKillerCount(serverWorld, players, gameWorldComponent);
 
         for (ServerPlayerEntity player : players) {

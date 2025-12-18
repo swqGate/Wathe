@@ -3,6 +3,7 @@ package dev.doctor4t.wathe.cca;
 import dev.doctor4t.wathe.Wathe;
 import dev.doctor4t.wathe.api.GameMode;
 import dev.doctor4t.wathe.api.WatheGameModes;
+import dev.doctor4t.wathe.api.WatheMapEffects;
 import dev.doctor4t.wathe.game.GameConstants;
 import dev.doctor4t.wathe.game.GameFunctions;
 import net.minecraft.nbt.NbtCompound;
@@ -44,7 +45,7 @@ public class AutoStartComponent implements AutoSyncedComponent, CommonTickingCom
             if (this.time-- <= 0 && this.world instanceof ServerWorld serverWorld) {
                 if (gameWorldComponent.getGameStatus() == GameWorldComponent.GameStatus.INACTIVE) {
                     GameMode gameMode = WatheGameModes.MURDER;
-                    GameFunctions.startGame(serverWorld, gameMode, GameConstants.getInTicks(gameMode.defaultStartTime, 0));
+                    GameFunctions.startGame(serverWorld, gameMode, WatheMapEffects.HARPY_EXPRESS_NIGHT, GameConstants.getInTicks(gameMode.defaultStartTime, 0));
                     return;
                 }
             }

@@ -1,6 +1,8 @@
 package dev.doctor4t.wathe.cca;
 
 import dev.doctor4t.wathe.Wathe;
+import dev.doctor4t.wathe.client.WatheClient;
+import dev.doctor4t.wathe.game.mapeffect.HarpyExpressTrainMapEffect;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
@@ -50,7 +52,7 @@ public class TrainWorldComponent implements AutoSyncedComponent, ServerTickingCo
     }
 
     public boolean isSnowing() {
-        return snow;
+        return WatheClient.gameComponent.getMapEffect() instanceof HarpyExpressTrainMapEffect && snow;
     }
 
     public void setSnow(boolean snow) {
@@ -124,15 +126,6 @@ public class TrainWorldComponent implements AutoSyncedComponent, ServerTickingCo
 
         ServerWorld serverWorld = (ServerWorld) world;
         serverWorld.setTimeOfDay(timeOfDay.time);
-    }
-
-    public void reset() {
-        this.snow = true;
-        this.fog = true;
-        this.hud = true;
-        this.speed = 130;
-        this.time = 0;
-        this.sync();
     }
 
     public enum TimeOfDay implements StringIdentifiable {

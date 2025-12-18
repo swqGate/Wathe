@@ -1,10 +1,7 @@
 package dev.doctor4t.wathe.cca;
 
 import dev.doctor4t.wathe.Wathe;
-import dev.doctor4t.wathe.api.GameMode;
-import dev.doctor4t.wathe.api.Role;
-import dev.doctor4t.wathe.api.WatheGameModes;
-import dev.doctor4t.wathe.api.WatheRoles;
+import dev.doctor4t.wathe.api.*;
 import dev.doctor4t.wathe.game.GameConstants;
 import dev.doctor4t.wathe.game.GameFunctions;
 import net.minecraft.entity.player.PlayerEntity;
@@ -51,6 +48,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ServerTickingCom
     }
 
     private GameMode gameMode = WatheGameModes.MURDER;
+    private MapEffect mapEffect = WatheMapEffects.HARPY_EXPRESS_NIGHT;
 
     private boolean bound = true;
 
@@ -207,6 +205,15 @@ public class GameWorldComponent implements AutoSyncedComponent, ServerTickingCom
         this.sync();
     }
 
+    public MapEffect getMapEffect() {
+        return mapEffect;
+    }
+
+    public void setMapEffect(MapEffect mapEffect) {
+        this.mapEffect = mapEffect;
+        this.sync();
+    }
+
     public UUID getLooseEndWinner() {
         return this.looseEndWinner;
     }
@@ -257,6 +264,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ServerTickingCom
         this.enableWeights = nbtCompound.getBoolean("EnableWeights");
 
         this.gameMode = WatheGameModes.GAME_MODES.get(Identifier.of(nbtCompound.getString("GameMode")));
+        this.mapEffect = WatheMapEffects.MAP_EFFECTS.get(Identifier.of(nbtCompound.getString("MapEffect")));
         this.gameStatus = GameStatus.valueOf(nbtCompound.getString("GameStatus"));
 
         this.fade = nbtCompound.getInt("Fade");
@@ -292,6 +300,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ServerTickingCom
         nbtCompound.putBoolean("EnableWeights", enableWeights);
 
         nbtCompound.putString("GameMode", this.gameMode != null ? this.gameMode.identifier.toString() : "");
+        nbtCompound.putString("MapEffect", this.mapEffect != null ? this.mapEffect.identifier.toString() : "");
         nbtCompound.putString("GameStatus", this.gameStatus.toString());
 
         nbtCompound.putInt("Fade", fade);
@@ -397,6 +406,9 @@ public class GameWorldComponent implements AutoSyncedComponent, ServerTickingCom
     private void tickCommon() {
         if (gameMode == null) {
             gameMode = WatheGameModes.MURDER;
+        }
+        if (mapEffect == null) {
+            mapEffect = WatheMapEffects.HARPY_EXPRESS_NIGHT;
         }
 
         // fade and start / stop game

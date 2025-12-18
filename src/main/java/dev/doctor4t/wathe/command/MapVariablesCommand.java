@@ -32,28 +32,6 @@ public class MapVariablesCommand {
                                 )
                         )
                         .then(CommandManager.literal("set")
-                                .then(CommandManager.literal("isTrain")
-                                        .then(CommandManager.argument("boolean", BoolArgumentType.bool())
-                                                .executes(
-                                                        context -> setValue(
-                                                                context.getSource(), "isTrain",
-                                                                BoolArgumentType.getBool(context, "boolean"),
-                                                                bool -> getMapVarsComponent(context).setTrain(bool)
-                                                        )
-                                                )
-                                        )
-                                )
-                                .then(CommandManager.literal("roomCount")
-                                        .then(CommandManager.argument("count", IntegerArgumentType.integer(0))
-                                                .executes(
-                                                        context -> setValue(
-                                                                context.getSource(), "roomCount",
-                                                                IntegerArgumentType.getInteger(context, "count"),
-                                                                count -> getMapVarsComponent(context).setRoomCount(count)
-                                                        )
-                                                )
-                                        )
-                                )
                                 .then(CommandManager.literal("spawnPosition")
                                         .then(CommandManager.argument("location", Vec3ArgumentType.vec3())
                                                 .then(CommandManager.argument("rotation", RotationArgumentType.rotation())

@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import dev.doctor4t.wathe.Wathe;
+import dev.doctor4t.wathe.cca.GameWorldComponent;
 import dev.doctor4t.wathe.cca.TrainWorldComponent;
 import dev.doctor4t.wathe.command.argument.TimeOfDayArgumentType;
 import net.minecraft.server.command.CommandManager;
@@ -30,14 +31,13 @@ public class SetVisualCommand {
                 .then(CommandManager.literal("time")
                         .then(CommandManager.argument("timeOfDay", TimeOfDayArgumentType.timeofday())
                                 .executes(context -> execute(context.getSource(), TrainWorldComponent::setTimeOfDay, TimeOfDayArgumentType.getTimeofday(context, "timeOfDay")))))
-                .then(CommandManager.literal("reset")
+                .then(CommandManager.literal("resetMapEffects")
                         .executes(context -> reset(context.getSource())))
         );
     }
 
     private static int reset(ServerCommandSource source) {
-        TrainWorldComponent trainWorldComponent = TrainWorldComponent.KEY.get(source.getWorld());
-        trainWorldComponent.reset();
+        GameWorldComponent.KEY.get(source.getWorld()).getMapEffect().initializeMapEffects(source.getWorld(), source.getWorld().getPlayers());
         return 1;
     }
 

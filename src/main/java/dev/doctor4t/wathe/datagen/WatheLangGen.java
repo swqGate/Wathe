@@ -133,8 +133,6 @@ public class WatheLangGen extends FabricLanguageProvider {
         builder.add("wathe.gui.reset", "Clear");
 
         builder.add("wathe.map_variables.help", """
-                    train: Whether the map is a train and should enable train visuals (like movement, snow, fog...) on game start.
-                    roomCount: The amount of rooms on the map. Determines the range of room keys player receive on game start. 0 to disable room key giving.
                     spawnPos: The spawn position and orientation players will be reset to once the game ends.
                     spectatorSpawnPos: The spawn position and orientation players will be set to when set as spectators at the start of a game.
                     readyArea: The lobby area which players need to be in to be selected for a game.
@@ -159,6 +157,9 @@ public class WatheLangGen extends FabricLanguageProvider {
         builder.add("wathe.midnightconfig.ultraPerfMode", "Ultra Performance Mode");
         builder.add("wathe.midnightconfig.ultraPerfMode.tooltip", "Disables scenery for a worse visual experience but maximum performance. Lowers render distance to 2.");
         builder.add("wathe.midnightconfig.disableScreenShake", "Disable Screen Shake");
+
+        builder.add("wathe.argument.game_mode.invalid", "Game mode could not be found");
+        builder.add("wathe.argument.map_effect.invalid", "Map effect could not be found");
 
         builder.add("credits.wathe.thank_you", "Thank you for playing The Last Voyage of the Harpy Express!\nMe and my team spent a lot of time working\non this mod and we hope you enjoy it.\nIf you do and wish to make a video or stream\nplease make sure to credit my channel,\nvideo and the mod page!\n - RAT / doctor4t");
     }

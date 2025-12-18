@@ -14,7 +14,7 @@
 		"Arathain"
 	],
 	"license": "ARR",
-	"icon": "assets/wathe/icon.png",
+	"icon": "icon2.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [

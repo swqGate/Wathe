@@ -26,14 +26,6 @@ public abstract class GameMode {
         this.minPlayerCount = minPlayerCount;
     }
 
-    public void readFromNbt(@NotNull NbtCompound nbtCompound, RegistryWrapper.WrapperLookup wrapperLookup) {
-
-    }
-
-    public void writeToNbt(@NotNull NbtCompound nbtCompound, RegistryWrapper.WrapperLookup wrapperLookup) {
-
-    }
-
     public void tickCommonGameLoop() {}
 
     public void tickClientGameLoop() {}
