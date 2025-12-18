@@ -7,6 +7,7 @@ import dev.doctor4t.wathe.block.*;
 import dev.doctor4t.wathe.block.property.CouchArms;
 import dev.doctor4t.wathe.index.WatheBlocks;
 import dev.doctor4t.wathe.index.WatheItems;
+import dev.doctor4t.wathe.item.KnifeItem;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.*;
@@ -16,6 +17,7 @@ import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.data.client.*;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
@@ -360,6 +362,12 @@ public class WatheModelGen extends FabricModelProvider {
         return new Model(Optional.of(Wathe.id("item/" + parent)), Optional.empty(), requiredTextureKeys);
     }
 
+    public static final Model KNIFE_TEMPLATE = model("item/template_knife", "_in_hand", TextureKey.LAYER0);
+
+    private static Model model(String parent, @Nullable String variant, TextureKey... keys) {
+        return new Model(Optional.of(Wathe.id(parent)), Optional.ofNullable(variant), keys);
+    }
+
     @Override
     public void generateItemModels(ItemModelGenerator generator) {
         generator.register(WatheItems.POISON_VIAL, SMALL_ITEM);
@@ -372,6 +380,54 @@ public class WatheModelGen extends FabricModelProvider {
         generator.register(WatheItems.GRENADE, SMALL_ITEM);
         generator.register(WatheItems.THROWN_GRENADE, SMALL_ITEM);
         generator.register(WatheItems.FIRECRACKER, SMALL_ITEM);
+
+        registerBuiltinModel(WatheItems.KNIFE, generator);
+        for (KnifeItem.Skin value : KnifeItem.Skin.values()) {
+            registerTemplateWeapon(KNIFE_TEMPLATE, value == KnifeItem.Skin.DEFAULT ? null : value.getName(), WatheItems.KNIFE, generator);
+        }
+    }
+
+    private void registerBuiltinModel(Item item, ItemModelGenerator generator) {
+        generator.writer.accept(ModelIds.getItemModelId(item), new SimpleModelSupplier(Identifier.of("builtin/entity")));
+    }
+
+    private void registerTemplateWeapon(Model templateModel, @Nullable String name, Item item, ItemModelGenerator generator) {
+        this.registerTemplateWeaponHandheld(templateModel, name, item, generator);
+        this.registerTemplateWeaponInventory(templateModel, name, item, generator);
+    }
+
+    private void registerTemplateWeaponHandheld(Model templateModel, @Nullable String name, Item item, ItemModelGenerator generator) {
+        registerTemplateWeaponHandheld(templateModel, name, Registries.ITEM.getId(item), generator);
+    }
+
+    private void registerTemplateWeaponHandheld(Model templateModel, @Nullable String name, Identifier itemId, ItemModelGenerator generator) {
+        Identifier handheldModelName = (name == null ? getItemSubId(itemId, "_in_hand") : getItemSubId(itemId, "_" + name + "_in_hand"));
+        Identifier handheldTexture = (name == null ? getItemId(itemId) : getItemSubId(itemId, "_" + name));
+
+        templateModel.upload(handheldModelName, TextureMap.layer0(handheldTexture), generator.writer); // this is the actual handheld model
+    }
+
+    private void registerTemplateWeaponInventory(Model templateModel, @Nullable String name, Item item, ItemModelGenerator generator) {
+        registerTemplateWeaponInventory(templateModel, name, Registries.ITEM.getId(item), generator);
+    }
+
+    private void registerTemplateWeaponInventory(Model templateModel, @Nullable String name, Identifier itemId, ItemModelGenerator generator) {
+        Identifier inventoryTexture = (name == null ? getItemSubId(itemId, "_inventory") : getItemSubId(itemId, "_" + name));
+        registerTemplateWeaponInventory(templateModel, name, itemId, inventoryTexture, generator);
+    }
+
+    private void registerTemplateWeaponInventory(Model templateModel, @Nullable String name, Identifier itemModelId, Identifier inventoryTexture, ItemModelGenerator generator) {
+        Identifier inventoryModelName = (name == null ? getItemSubId(itemModelId, "_inventory") : getItemSubId(itemModelId, "_" + name + "_inventory"));
+
+        Models.HANDHELD.upload(inventoryModelName, TextureMap.layer0(inventoryTexture), generator.writer); // this is actually the inventory model
+    }
+
+    public static Identifier getItemId(Identifier itemId) {
+        return itemId.withPrefixedPath("item/");
+    }
+
+    public static Identifier getItemSubId(Identifier itemId, String suffix) {
+        return itemId.withPath(path -> "item/" + path + suffix);
     }
 
     private BlockStateVariant variant() {

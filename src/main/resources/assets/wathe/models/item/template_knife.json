@@ -1,8 +1,5 @@
 {
     "parent": "item/generated",
-    "textures": {
-        "layer0": "wathe:item/knife"
-    },
     "display": {
         "thirdperson_righthand": {
             "rotation": [ 0, -90, -140 ],

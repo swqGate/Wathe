@@ -19,6 +19,7 @@ import dev.doctor4t.wathe.client.render.block_entity.WheelBlockEntityRenderer;
 import dev.doctor4t.wathe.client.render.entity.FirecrackerEntityRenderer;
 import dev.doctor4t.wathe.client.render.entity.HornBlockEntityRenderer;
 import dev.doctor4t.wathe.client.render.entity.NoteEntityRenderer;
+import dev.doctor4t.wathe.client.render.item.KnifeDynamicItemRenderer;
 import dev.doctor4t.wathe.client.util.WatheItemTooltips;
 import dev.doctor4t.wathe.entity.FirecrackerEntity;
 import dev.doctor4t.wathe.entity.NoteEntity;
@@ -33,6 +34,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
@@ -101,6 +103,11 @@ public class WatheClient implements ClientModInitializer {
 
         // Register entity model layers
         WatheModelLayers.initialize();
+
+        // Built-in Item Renderers
+        BuiltinItemRendererRegistry.INSTANCE.register(WatheItems.KNIFE, new KnifeDynamicItemRenderer());
+        // Force load the weapon models (otherwise since they're never called they wouldn't be loaded by default)
+        ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(KnifeDynamicItemRenderer.MODELS_TO_REGISTER));
 
         // Block render layers
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
