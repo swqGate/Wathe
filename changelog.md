@@ -1,4 +1,22 @@
 ------------------------------------------------------
+The Last Voyage of the Harpy Express 1.3 - 1.21.1
+------------------------------------------------------
+- Added a /mapVariables command that allows changing variables for custom maps:
+  - isTrain: Whether the map is a train and should enable train visuals (like movement, snow, fog...) on game start.
+  - roomCount: The amount of rooms on the map. Determines the range of room keys player receive on game start. 0 to disable room key giving.
+  - spawnPos: The spawn position and orientation players will be reset to once the game ends.
+  - spectatorSpawnPos: The spawn position and orientation players will be set to when set as spectators at the start of a game.
+  - readyArea: The lobby area which players need to be in to be selected for a game.
+  - playAreaOffset: The offset players will be teleported by from the ready area into the play area.
+  - playArea: The play area outside which players will be eliminated.
+  - resetTemplateArea: The template that will be copied over the play area in order to reset the map.
+  - resetPasteOffset: The offset at which the template should be pasted.
+- Moved weights, bounds, auto-start and backfire commands to a new /gameSettings command
+- Fixed Derringers not replenishing on kill
+- Fixed Revolvers being able to be double fired
+- Tweaked the API to allow more modability
+
+------------------------------------------------------
 The Last Voyage of the Harpy Express 1.2.6 - 1.21.1
 ------------------------------------------------------
 - Fixed psycho ambience not going away
