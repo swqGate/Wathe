@@ -1,6 +1,8 @@
 ------------------------------------------------------
-The Last Voyage of the Harpy Express 1.3 - 1.21.1
+Wathe 1.3 - 1.21.1
 ------------------------------------------------------
+- Changed the mod identifier from "trainmurdermystery" to "wathe" and renamed it to avoid confusion with the Harpy Express modpack and reflect the mod now allowing maps other than trains
+  - Previous maps should still be compatible, as block, item and entity aliases were added to transition mod identifiers
 - Added a /mapVariables command that allows changing variables for custom maps:
   - isTrain: Whether the map is a train and should enable train visuals (like movement, snow, fog...) on game start.
   - roomCount: The amount of rooms on the map. Determines the range of room keys player receive on game start. 0 to disable room key giving.
@@ -141,7 +143,7 @@ The Last Voyage of the Harpy Express 1.1.2.1 - 1.21.1
 The Last Voyage of the Harpy Express 1.1.2 - 1.21.1
 ------------------------------------------------------
 - Added a client config option to disable screen shake
-  - Removed the /tmm:setVisual screenshake option as a result
+  - Removed the /wathe:setVisual screenshake option as a result
 - Disabled inventory while the game is fading in or out
 - Added a collection of new events designed to make it easier for addons to implement custom role abilities, and to help prevent conflicts when multiple addons are installed, thanks to PunIsIntendeds 🐀❤️
 - Added Portuguese language support, thanks to GabrielFl4 🐀❤️
