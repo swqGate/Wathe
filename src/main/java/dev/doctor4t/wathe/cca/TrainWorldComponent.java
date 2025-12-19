@@ -125,7 +125,9 @@ public class TrainWorldComponent implements AutoSyncedComponent, ServerTickingCo
         tickTime();
 
         ServerWorld serverWorld = (ServerWorld) world;
-        serverWorld.setTimeOfDay(timeOfDay.time);
+        if (GameWorldComponent.KEY.get(serverWorld).getMapEffect() instanceof HarpyExpressTrainMapEffect) {
+            serverWorld.setTimeOfDay(timeOfDay.time);
+        }
     }
 
     public enum TimeOfDay implements StringIdentifiable {
